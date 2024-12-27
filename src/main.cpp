@@ -27,17 +27,12 @@ void init_leds()
 // Ping given ip adress and switch the LED accordingly
 void check_ip_presence(IPAddress ip, int led_pin)
 {
-  Serial.print("Pinging ip ");
-  Serial.println(ip);
-
   if (Ping.ping(ip))
   {
-    Serial.println("Success!!");
     digitalWrite(led_pin, HIGH);
   }
   else
   {
-    Serial.println("Error :(");
     digitalWrite(led_pin, LOW);
   }
 }
@@ -55,25 +50,14 @@ void check_ips()
 
 void setup()
 {
-  Serial.begin(115200);
-  delay(10);
-
   init_leds();
 
   // Connect to WiFi network
-  Serial.println();
-  Serial.println("Connecting to WiFi");
-
   WiFi.begin(ssid, password);
-
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(100);
-    Serial.print(".");
   }
-  Serial.println();
-  Serial.print("WiFi connected with ip ");
-  Serial.println(WiFi.localIP());
 }
 
 void loop()
