@@ -27,7 +27,7 @@ void init_leds()
 // Ping given ip adress and switch the LED accordingly
 void check_ip_presence(IPAddress ip, int led_pin)
 {
-  if (Ping.ping(ip))
+  if (Ping.ping(ip, 2))
   {
     digitalWrite(led_pin, HIGH);
   }
