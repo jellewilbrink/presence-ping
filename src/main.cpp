@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <ESP32Ping.h>
 
-#include "secrets.h"
+#include "example_secrets.h"
 
 // All the constants are defined using '#define' in
 // secrets.h according to the types specified here.
