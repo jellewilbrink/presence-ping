@@ -1,9 +1,7 @@
 # Presence Ping
 An LED indicator of people's presence at home.
 
-This project uses an ESP32 to turn on an LED when a given IP adress is reachable over the network, and turn of the LED when the address is not reachable.
-
-By assigning the smartphones of all inhabitants a known static IP address (this can be done in the router), the reachability of the IP address becomes an indicator of a person's presence.
+This project uses an ESP32 to turn on an LED when a given BLE device is detected, and turn of the LED when the device is absent.
 
 ## Getting started
 ### Installation
@@ -14,9 +12,9 @@ Alternatively, open it in the Arduino IDE, but in this case: remove the `#includ
 After you build the circuit and add your configuration, simply upload the code.
 
 ### Configuration
-Copy [example_secrets.h](./src/example_secrets.h) to a new file called "secrets.h". This file is ignored by git, so you won't accidentally push your WIFI credentials. Change the contents of "secrets.h" to your liking.
+Copy [example_secrets.h](./src/example_secrets.h) to a new file called "secrets.h". This file is ignored by git, so you won't accidentally push secret information. Change the contents of "secrets.h" to your liking.
 
-Also configure the router to statically assign the desired IP addresses the the desired devices. 
+You will need to add a list of the UUIDs of devices that you want to track the presence of. You can use a separate tool to find the UUIDs, for example [nRFConnect](https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-mobile).
 
 ### Circuit
 Connect the + pin of an LED to each pin that you defined in the `LED_PINS` array in "secrets.h" and connect a 2 kOhm resistor between the - pin of an LED and the GND pin of the ESP32.
@@ -32,3 +30,8 @@ Please note that all the libraries used are publicly available under the LGPL v2
 #include <WiFi.h>
 #include <ESP32Ping.h>
 ```
+
+## Reading material
+- BLE-Scanner: https://github.com/gromeck/BLE-Scanner?tab=readme-ov-file
+- NimBLE library: https://github.com/h2zero/NimBLE-Arduino
+- List of Bluetooth Company Identifier UUIDs: https://www.bluetooth.com/specifications/assigned-numbers/
