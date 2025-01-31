@@ -23,6 +23,10 @@ Connect the + pin of an LED to each pin that you defined in the `LED_PINS` array
 ## Troubleshooting
 - If the LEDs don't light up after the first upload of the code to the ESP32, uploading a second time might sometimes help.
 
+## Contributing
+### Unit testing
+Unit tests are configured using the built-in options from platformio. The [Unity framework](https://docs.platformio.org/en/latest/advanced/unit-testing/frameworks/unity.html) is chosen.
+
 ## Open Source Libraries
 Please note that all the libraries used are publicly available under the LGPL v2.1 license:
 ``` C++
