@@ -1,7 +1,6 @@
 name: Setup Platformio and Checkout code
 
-on:
-  workflow_call:
+on: workflow_call
 
 jobs:
   common-setup:
