@@ -44,13 +44,15 @@ void test_init_calls_set_pin_mode_and_state(void)
 }
 
 // Keep track of initialized pins
-// test_drive_initialized_pin
-// test_drive_uninitialized_pin
+void test_drive_initialized_pin(void) {}
+void test_drive_uninitialized_pin(void) {}
 
 int runUnityTests(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_init_calls_set_pin_mode_and_state);
+    RUN_TEST(test_drive_initialized_pin);
+    RUN_TEST(test_drive_uninitialized_pin);
     return UNITY_END();
 }
 

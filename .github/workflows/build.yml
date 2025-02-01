@@ -1,0 +1,21 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        platform: [esp32, native]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up PlatformIO
+        uses: platformio/action-setup@v2
+        with:
+          python_version: '3.8'
+      - name: Build
+        run: pio run -e ${{ matrix.platform }}
