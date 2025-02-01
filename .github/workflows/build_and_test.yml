@@ -1,0 +1,24 @@
+name: Build and test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        platform: [esp32doit-devkit-v1, native]
+
+    steps:
+      - uses: ./.github/workflows/setup_platformio.yml
+      - name: Build
+        run: pio run -e ${{ matrix.platform }}
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: ./.github/workflows/setup_platformio.yml
+      - name: Run tests on the native platform
+        run: platformio test -e native
