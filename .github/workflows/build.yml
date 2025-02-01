@@ -11,11 +11,12 @@ jobs:
         platform: [esp32, native]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up PlatformIO
-        uses: platformio/action-setup@v2
-        with:
-          python_version: '3.8'
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@v1
+      - name: Install PlatformIO
+        run: |
+          python -m pip install --upgrade pip
+          pip install platformio
       - name: Build
         run: pio run -e ${{ matrix.platform }}
