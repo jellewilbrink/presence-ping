@@ -23,7 +23,6 @@ jobs:
         platform: [esp32doit-devkit-v1, native]
 
     steps:
-      - uses: ./.github/workflows/setup_platformio.yml
       - name: Build
         run: pio run -e ${{ matrix.platform }}
 
@@ -32,6 +31,5 @@ jobs:
     needs: common-setup
 
     steps:
-      - uses: .github/workflows/setup_platformio.yml
       - name: Run tests on the native platform
         run: platformio test -e native
