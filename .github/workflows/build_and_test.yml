@@ -11,6 +11,7 @@ jobs:
         platform: [esp32doit-devkit-v1, native]
 
     steps:
+      - uses: actions/checkout@v1
       - name: Init PlatformIO
         uses: ./.github/actions/setup-platformio
       - name: Build
@@ -20,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v1
       - name: Init PlatformIO
         uses: ./.github/actions/setup-platformio    
       - name: Run tests on the native platform
