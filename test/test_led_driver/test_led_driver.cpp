@@ -43,16 +43,32 @@ void test_init_calls_set_pin_mode_and_state(void)
     TEST_ASSERT_EQUAL(2, led_driver_mock->number_set_pin_state_called);
 }
 
-// Keep track of initialized pins
-void test_drive_initialized_pin(void) {}
-void test_drive_uninitialized_pin(void) {}
+void test_set_pin_high()
+{
+    led_driver_mock->init_led(1);
+    bool result = led_driver_mock->set_pin_high(1);
+
+    TEST_ASSERT_EQUAL(true, result);
+    TEST_ASSERT_EQUAL(1, led_driver_mock->number_set_pin_mode_called);
+    TEST_ASSERT_EQUAL(2, led_driver_mock->number_set_pin_state_called);
+}
+
+void test_set_pin_low()
+{
+    led_driver_mock->init_led(1);
+    bool result = led_driver_mock->set_pin_low(1);
+
+    TEST_ASSERT_EQUAL(true, result);
+    TEST_ASSERT_EQUAL(1, led_driver_mock->number_set_pin_mode_called);
+    TEST_ASSERT_EQUAL(2, led_driver_mock->number_set_pin_state_called);
+}
 
 int runUnityTests(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_init_calls_set_pin_mode_and_state);
-    RUN_TEST(test_drive_initialized_pin);
-    RUN_TEST(test_drive_uninitialized_pin);
+    RUN_TEST(test_set_pin_high);
+    RUN_TEST(test_set_pin_low);
     return UNITY_END();
 }
 

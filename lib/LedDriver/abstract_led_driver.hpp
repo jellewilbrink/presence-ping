@@ -21,6 +21,8 @@ class AbstractLedDriver
 {
 public:
     void init_led(uint8_t pin);
+    bool set_pin_high(uint8_t pin);
+    bool set_pin_low(uint8_t pin);
 
 protected:
     virtual void set_pin_mode(uint8_t pin, uint8_t mode) = 0;
