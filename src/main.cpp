@@ -1,3 +1,6 @@
+#include "example_secrets.h"
+#define MAX_NUMBER_OF_LED_PINS NUM_UUIDs
+
 #ifdef ESP32
 
 #include <Arduino.h>
