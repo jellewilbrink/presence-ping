@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [esp32, native]
+        platform: [esp32doit-devkit-v1, native]
 
     steps:
       - uses: actions/checkout@v1
