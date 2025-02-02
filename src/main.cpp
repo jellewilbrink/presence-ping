@@ -1,10 +1,12 @@
-#include "example_secrets.h"
-#define MAX_NUMBER_OF_LED_PINS NUM_UUIDs
+
 
 #ifdef ESP32
 
 #include <Arduino.h>
 #include "led_driver.hpp"
+#include "example_secrets.h"
+
+#define MAX_NUMBER_OF_LED_PINS NUM_UUIDs
 
 LedDriver *led_driver;
 

@@ -4,26 +4,25 @@
 #include <stdint.h>
 #include <array>
 
-// AbstractLedDriver needs these defines. For the target build, Arduino.h brings them,
-// but for native we need to define them here.
-#ifndef LOW
-#define LOW 0x0
-#endif
-
-#ifndef HIGH
-#define HIGH 0x1
-#endif
-
-#ifndef OUTPUT
-#define OUTPUT 0x03
-#endif
-
-#ifndef MAX_NUMBER_OF_LED_PINS
 #ifdef ESP32
+#include "esp32-hal-gpio.h"
+#ifndef MAX_NUMBER_OF_LED_PINS
 #define MAX_NUMBER_OF_LED_PINS 34
-#else
-#error "MAX_NUMBER_OF_LED_PINS must be defined!"
+#endif // MAX_NUMBER_OF_LED_PINS
 #endif // ESP32
+
+// Check required defines.
+#ifndef LOW
+#error "LOW must be defined!"
+#endif // LOW
+#ifndef HIGH
+#error "HIGH must be defined!"
+#endif // HIGH
+#ifndef OUTPUT
+#error "OUTPUT must be defined!"
+#endif // OUTPUT
+#ifndef MAX_NUMBER_OF_LED_PINS
+#error "MAX_NUMBER_OF_LED_PINS must be defined!"
 #endif // MAX_NUMBER_OF_LED_PINS
 
 class AbstractLedDriver
