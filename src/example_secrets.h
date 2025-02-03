@@ -2,7 +2,7 @@
 #define NUM_UUIDs 2
 
 // List of IP adresses to ping. Length must be NUM_UUIDs
-#define UUID_LIST {"ABCD", "EF01"}
+#define UUID_LIST {0x001122334455, 0xAABBCCDDEEFF}
 
 // List of GPIO pins for the LEDs. Length must be NUM_UUIDs
 #define LED_PINS {13, 14}
