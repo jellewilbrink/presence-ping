@@ -36,21 +36,13 @@ void loop()
 
     if (millis() >= next_scan_millis)
     {
-        // Scan
+        // // Scan
         ble_scanner->scan(kScanTime);
 
         // Find and switch LEDs
-        assert(kUuidList.size() == kLedPinList.size());
-        for (int i = 0; i < kUuidList.size(); i++)
-        {
-            auto device_address = kUuidList[i];
-            auto led_pin = kLedPinList[i];
-
-            if (ble_scanner->is_device_found(device_address))
-                led_driver->set_pin_high(led_pin);
-            else
-                led_driver->set_pin_low(led_pin);
-        }
+        uint8_t num_devices_with_target_service = 0;
+        num_devices_with_target_service += ble_scanner->get_service_uuid_count(0xFCF1); // Android Nearby share
+        num_devices_with_target_service += ble_scanner->get_service_uuid_count(0x0000); // Apple Nearby Share
 
         next_scan_millis += kScanInterval;
     }
