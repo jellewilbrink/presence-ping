@@ -1,5 +1,7 @@
 #include "ble_scanner.hpp"
+#include "ble_scanner_utils.hpp"
 #include <Arduino.h>
+#include <string>
 
 BleScanner::BleScanner()
 {
@@ -28,8 +30,43 @@ uint8_t BleScanner::get_service_uuid_count(uint16_t uuid)
     for (int i = 0; i < scan_results.getCount(); i++)
     {
         const NimBLEAdvertisedDevice *device = scan_results.getDevice(i);
-        if (device->isAdvertisingService(target_uuid))
-            count++;
+
+        if (device->haveServiceData())
+        {
+            uint8_t data_count = device->getServiceDataCount();
+            for (uint8_t j = 0; j < data_count; j++)
+            {
+                if (device->getServiceDataUUID(j) == target_uuid)
+                {
+                    count++;
+                    break; // Found UUID for this device, so go to next device.
+                }
+            }
+        }
+    }
+
+    return count;
+}
+
+uint8_t BleScanner::get_manufacturer_id_count(uint16_t id)
+{
+    uint8_t count = 0;
+
+    for (int i = 0; i < scan_results.getCount(); i++)
+    {
+        const NimBLEAdvertisedDevice *device = scan_results.getDevice(i);
+
+        if (device->haveManufacturerData())
+        {
+            // Get manufacturer data and convert to hex string (Copied from: NimBLEAdvertisedDevice.cpp)
+            auto manufacturer_data = device->getManufacturerData();
+            std::string manufacturer_data_string = NimBLEUtils::dataToHexString(reinterpret_cast<const uint8_t *>(manufacturer_data.data()), manufacturer_data.length());
+
+            int manufacturer_id = BleScannerUtils().parse_manufacturer_id(manufacturer_data_string);
+
+            if (manufacturer_id == id)
+                count++;
+        }
     }
 
     return count;
