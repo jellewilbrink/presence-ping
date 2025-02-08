@@ -20,6 +20,21 @@ bool BleScanner::is_device_found(uint64_t device_address)
     return scan_results.getDevice(nimble_address) != nullptr ? true : false;
 }
 
+uint8_t BleScanner::get_service_uuid_count(uint16_t uuid)
+{
+    uint8_t count = 0;
+    NimBLEUUID target_uuid(uuid);
+
+    for (int i = 0; i < scan_results.getCount(); i++)
+    {
+        const NimBLEAdvertisedDevice *device = scan_results.getDevice(i);
+        if (device->isAdvertisingService(target_uuid))
+            count++;
+    }
+
+    return count;
+}
+
 void BleScanner::scan_and_print(uint32_t duration, unsigned long baud_rate)
 {
     Serial.begin(baud_rate);

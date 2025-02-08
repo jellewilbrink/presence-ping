@@ -11,6 +11,8 @@ public:
     void scan(uint32_t duration);
     bool is_device_found(uint64_t device_address);
 
+    uint8_t get_service_uuid_count(uint16_t uuid);
+
     /**
      * Scan for BLE devices and print the results to serial console for debugging purposes.
      *
