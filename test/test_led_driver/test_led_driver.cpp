@@ -164,6 +164,35 @@ void test_drive_uninitialized_pin_low(void)
     TEST_ASSERT_EQUAL(0, led_driver_mock->number_set_pin_state_called);
 }
 
+void test_enable_num_pins(void)
+{
+    led_driver_mock->init_led(1);
+    led_driver_mock->init_led(2);
+
+    TEST_ASSERT_EQUAL(2, led_driver_mock->number_set_pin_mode_called);
+    TEST_ASSERT_EQUAL(2, led_driver_mock->number_set_pin_state_called);
+
+    bool result = led_driver_mock->enable_num_leds(0);
+    TEST_ASSERT_EQUAL(true, result);
+    TEST_ASSERT_EQUAL(4, led_driver_mock->number_set_pin_state_called);
+
+    result = led_driver_mock->enable_num_leds(2);
+    TEST_ASSERT_EQUAL(true, result);
+    TEST_ASSERT_EQUAL(6 + 2, led_driver_mock->number_set_pin_state_called);
+}
+void test_enable_num_pins_too_many(void)
+{
+    led_driver_mock->init_led(1);
+    led_driver_mock->init_led(2);
+
+    TEST_ASSERT_EQUAL(2, led_driver_mock->number_set_pin_mode_called);
+    TEST_ASSERT_EQUAL(2, led_driver_mock->number_set_pin_state_called);
+
+    bool result = led_driver_mock->enable_num_leds(5);
+    TEST_ASSERT_EQUAL(false, result);
+    TEST_ASSERT_EQUAL(4 + 2, led_driver_mock->number_set_pin_state_called);
+}
+
 int runUnityTests(void)
 {
     UNITY_BEGIN();
@@ -178,6 +207,8 @@ int runUnityTests(void)
     RUN_TEST(test_set_pin_low);
     RUN_TEST(test_drive_uninitialized_pin_high);
     RUN_TEST(test_drive_uninitialized_pin_low);
+    RUN_TEST(test_enable_num_pins);
+    RUN_TEST(test_enable_num_pins_too_many);
     return UNITY_END();
 }
 

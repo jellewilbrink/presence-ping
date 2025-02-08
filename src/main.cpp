@@ -44,6 +44,8 @@ void loop()
         num_devices_with_target_service += ble_scanner->get_service_uuid_count(0xFCF1); // Android Nearby share
         num_devices_with_target_service += ble_scanner->get_service_uuid_count(0x0000); // Apple Nearby Share
 
+        led_driver->enable_num_leds(num_devices_with_target_service);
+
         next_scan_millis += kScanInterval;
     }
 }

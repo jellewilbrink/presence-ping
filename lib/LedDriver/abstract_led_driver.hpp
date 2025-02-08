@@ -34,6 +34,14 @@ public:
     bool set_pin_low(uint8_t pin);
     bool is_led_pin_initialized(uint8_t pin);
 
+    /**
+     * Enable a number of LEDs.
+     *
+     * Returns true on success, false on failure.
+     * If not enough LEDs have been initialized all of them will be enabled, and false is returned.
+     */
+    bool enable_num_leds(uint8_t num);
+
 protected:
     virtual void set_pin_mode(uint8_t pin, uint8_t mode) = 0;
     virtual void set_pin_state(uint8_t pin, uint8_t val) = 0;

@@ -58,3 +58,23 @@ bool AbstractLedDriver::is_led_pin_initialized(uint8_t pin)
     }
     return found;
 }
+
+bool AbstractLedDriver::enable_num_leds(uint8_t num)
+{
+    bool enough_available = (initialized_led_pins.size() >= num);
+    int enable_num_leds = enough_available ? num : initialized_led_pins.size();
+
+    // Reset all LEDs
+    for (int i = 0; i < initialized_led_pins.size(); i++)
+    {
+        set_pin_low(initialized_led_pins[i]);
+    }
+
+    // Enable the right number of LEDs
+    for (int i = 0; i < enable_num_leds; i++)
+    {
+        set_pin_high(initialized_led_pins[i]);
+    }
+
+    return enough_available;
+}
