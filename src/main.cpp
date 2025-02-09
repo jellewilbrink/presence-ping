@@ -14,11 +14,10 @@
 #define MAX_NUMBER_OF_LED_PINS NUM_UUIDs
 
 // const int kNumberOfUuids = NUM_UUIDs;
-const std::array<uint64_t, NUM_UUIDs> kUuidList = UUID_LIST;
-const std::array<uint8_t, NUM_UUIDs> kLedPinList = LED_PINS;
+const std::array<uint8_t, NUM_LEDs> kLedPinList = LED_PINS;
 const uint32_t kScanTime = SCAN_TIME;
 const uint32_t kScanInterval = SCAN_INTERVAL;
-const size_t kMovingMeanWindowSize = 3;
+const size_t kMovingMeanWindowSize = 3;  // Assuming 1 scan per minute, the voting window is 3 minutes
 const size_t kMovingMinWindowSize = 600; // Assuming 1 scan per minute, 600 samples == 10 hours
 
 LedDriver *led_driver;
@@ -35,9 +34,9 @@ void setup()
 
     Serial.begin(115200);
 
-    // // Register LEDs
-    // for (auto pin : kLedPinList)
-    //     led_driver->init_led(pin);
+    // Register LEDs
+    for (auto pin : kLedPinList)
+        led_driver->init_led(pin);
 }
 
 void loop()
@@ -50,7 +49,7 @@ void loop()
     if (millis() >= next_scan_millis)
     {
         // // Scan
-        ble_scanner->scan_and_print(kScanTime, 115200);
+        ble_scanner->scan(kScanTime);
 
         // Find and switch LEDs
         uint8_t num_devices_with_target_service = 0;
@@ -65,9 +64,16 @@ void loop()
 
         num_smartphones_detected = mean - baseline;
 
-        // led_driver->enable_num_leds(num_devices_with_target_service);
-        Serial.print("Number of smartphones detected: ");
-        Serial.println(num_smartphones_detected);
+        led_driver->enable_num_leds(num_devices_with_target_service);
+        // Serial.print("num_devices_with_target_service: ");
+        // Serial.println(num_devices_with_target_service);
+        // Serial.print("mean ");
+        // Serial.println(mean);
+        // Serial.print("baseline: ");
+        // Serial.println(baseline);
+
+        // Serial.print("Number of smartphones detected: ");
+        // Serial.println(num_smartphones_detected);
 
         next_scan_millis += kScanInterval;
     }
