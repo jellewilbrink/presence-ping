@@ -11,7 +11,7 @@
 #include "MovingMeanFilter.hpp"
 #include "MovingMinFilter.hpp"
 
-#define MAX_NUMBER_OF_LED_PINS NUM_UUIDs
+#define MAX_NUMBER_OF_LED_PINS LED_PINS
 
 // const int kNumberOfUuids = NUM_UUIDs;
 const std::array<uint8_t, NUM_LEDs> kLedPinList = LED_PINS;
@@ -31,8 +31,6 @@ void setup()
     ble_scanner = new BleScanner();
     mov_mean = new MovingMeanFilter(kMovingMeanWindowSize);
     mov_min = new MovingMinFilter(kMovingMinWindowSize);
-
-    Serial.begin(115200);
 
     // Register LEDs
     for (auto pin : kLedPinList)
