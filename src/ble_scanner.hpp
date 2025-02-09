@@ -23,6 +23,9 @@ public:
      */
     uint8_t get_manufacturer_id_count(uint16_t id);
 
+    uint8_t get_apple_find_my_device_count();
+    uint8_t get_android_nearby_service_uuid_count();
+
     /**
      * Scan for BLE devices and print the results to serial console for debugging purposes.
      *

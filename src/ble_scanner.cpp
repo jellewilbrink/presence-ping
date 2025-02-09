@@ -72,6 +72,35 @@ uint8_t BleScanner::get_manufacturer_id_count(uint16_t id)
     return count;
 }
 
+uint8_t BleScanner::get_apple_find_my_device_count()
+{
+
+    uint8_t count = 0;
+
+    for (int i = 0; i < scan_results.getCount(); i++)
+    {
+        const NimBLEAdvertisedDevice *device = scan_results.getDevice(i);
+
+        if (device->haveManufacturerData())
+        {
+            // Get manufacturer data and convert to hex string (Copied from: NimBLEAdvertisedDevice.cpp)
+            auto manufacturer_data = device->getManufacturerData();
+            std::string manufacturer_data_string = NimBLEUtils::dataToHexString(reinterpret_cast<const uint8_t *>(manufacturer_data.data()), manufacturer_data.length());
+
+            if (BleScannerUtils().is_apple_find_my_service(manufacturer_data_string))
+                count++;
+        }
+    }
+
+    return count;
+}
+
+uint8_t BleScanner::get_android_nearby_service_uuid_count()
+{
+    const uint16_t uuid_android_nearby = 0xFCF1;
+    return get_service_uuid_count(uuid_android_nearby);
+}
+
 void BleScanner::scan_and_print(uint32_t duration, unsigned long baud_rate)
 {
     Serial.begin(baud_rate);
